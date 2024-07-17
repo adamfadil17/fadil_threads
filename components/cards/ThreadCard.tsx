@@ -1,3 +1,4 @@
+import { formatDateString } from '@/lib/utils';
 import { StringExpression } from 'mongoose';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -64,7 +65,9 @@ const ThreadCard = ({
               <h4 className="cursor-pointer text-base-semibold text-light-1">
                 {author.name}
               </h4>
-              <p className="text-small-medium text-gray-1">@{author.username}</p>
+              <p className="text-small-medium text-gray-1">
+                @{author.username}
+              </p>
             </Link>
 
             <p className="mt-2 text-small-regular text-light-2">{content}</p>
@@ -113,7 +116,27 @@ const ThreadCard = ({
             </div>
           </div>
         </div>
+        {/* TODO: Delete Thread */}
+        {/* TODO: Show comments logo */}
       </div>
+      {!isComment && community && (
+        <Link
+          href={`/communities/${community.id}`}
+          className="mt-5 flex items-center"
+        >
+          <p className="text-subtle-medium text-gray-1">
+            {formatDateString(createdAt)} - {community.name} Community
+          </p>
+
+          <Image
+            src={community.image}
+            alt={community.name}
+            width={14}
+            height={14}
+            className="ml-1 rounded-full object-cover"
+          />
+        </Link>
+      )}
     </article>
   );
 };
